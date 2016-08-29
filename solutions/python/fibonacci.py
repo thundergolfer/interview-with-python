@@ -30,3 +30,22 @@ def fibonacci_comprehension(limit):
     [sequence.append(sequence[i] + sequence[i-1]) for i in range(1, limit)]
 
     return sequence[-1]
+
+def fibonacci_generator():
+    """ fibonacci sequence using a generator."""
+    a, b = 0, 1
+    yield a
+    yield b
+    while True:
+        a, b = b, b + a
+        yield b
+
+if __name__ == '__main__:'
+
+    # Use generator version
+    for i,value in zip(range(15),fibonacci_generator()):
+        print(value)
+
+    # Cant use this way. You will just get 0's
+    for _ in range(15):
+        print(next(fibonacci_generator())) # we just keep hitting the first "yeild a"
