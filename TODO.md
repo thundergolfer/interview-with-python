@@ -7,3 +7,4 @@
 ### FOR... PROBLEMS
 
 * Document and Explain all code exercises that don't have it.
+* We want to include all the CodeJam problems. There are a lot of them so we need either a lot of time, or a scraping solution. So investigate a scraping solution for CodeJam past problems. 
