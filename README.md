@@ -2,6 +2,10 @@
 
 ##### More python code examples and exercises than you could ever need, all documented and explained for effective and fast learning. Comes with a *GUI Exercise Search and Launcher* out of the box.
 
+<p align="center">
+  <img src="/images/interview-with-python-hero.png"/>
+</p>
+
 ### Why Use This Repo Over Others?
 #### 1. It has the most python code exercises of any repo on Github, and they're *EASILY SEARCHABLE*.
 #### 2. The code exercises are *ACTUALLY DOCUMENTED AND EXPLAINED*.
