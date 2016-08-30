@@ -15,8 +15,15 @@ def main():
 
             # if: problem solution source code file then check for -> tags, unit tests, spelling
 
-            # if: any other file check for -> spelling
+            # and... any other file check for -> spelling, "TODO" markers, amount of commenting
 
+
+def check_amount_of_commenting( lines ):
+    """
+    Check lines of file to see whether it has a lot of commenting in it,
+    which we take to mean the presence of code explanation.
+    """
+    raise NotImplementedError
 
 def check_for_tags( lines ):
     """ Check if a problem solution file has tags in it. True, if yes. """
