@@ -17,7 +17,7 @@ def fizz_buzz_one( start, end ):
             fizzbuzz += str(i)
 
         fizzbuzz += ' '
-    return fizzbuzz
+    return fizzbuzz.rstrip() # remove trailing whitespace
 
 
 def fizz_buzz_two( start, end ):
@@ -60,8 +60,44 @@ def fizz_buzz_four( start, end ):
     for i in range(start, end+1):
         fizz = (i % 3 == 0)
         buzz = (i % 5 == 0)
-        if fizz and buzz:   result.append('Fizzbuzz')
-        elif fizz:          result.append('Fizz')
-        elif buzz:          result.append('Buzz')
+        if fizz and buzz:   result.append('fizzbuzz')
+        elif fizz:          result.append('fizz')
+        elif buzz:          result.append('buzz')
         else:               result.append(i)
     return result
+
+
+# Unit testing
+class fizz_buzz_tests(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_fizz_buzz_one(self):
+        self.assertEqual(
+            fizz_buzz_one(0, 12), "fizzbuzz 1 2 fizz 4 buzz fizz 7 8 fizz buzz 11 fizz"
+        )
+        self.assertEqual(fizz_buzz_one(0, 0), "fizzbuzz")
+        self.assertEqual(fizz_buzz_one(14,16), "14 fizzbuzz 16")
+
+    def test_fizz_buzz_two(self):
+        self.assertEqual(
+            fizz_buzz_two(5, 12), ['buzz', 'fizz', 7, 8, 'fizz', 'buzz', 11, 'fizz']
+        )
+        self.assertEqual(
+            fizz_buzz_two(5, -2), []
+        )
+
+    def test_fizz_buzz_three(self):
+        self.assertEqual(
+            fizz_buzz_three(5, 12), ['buzz', 'fizz', 7, 8, 'fizz', 'buzz', 11, 'fizz']
+        )
+
+    def test_fizz_buzz_four(self):
+        self.assertEqual(
+            fizz_buzz_four(5, 12), ['buzz', 'fizz', 7, 8, 'fizz', 'buzz', 11, 'fizz']
+        )
+
+
+if __name__ == '__main__':
+    unittest.main()

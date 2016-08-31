@@ -72,7 +72,7 @@ class array_pair_sum_tests(unittest.TestCase):
 
     def test_two(self):
         self.assertEqual(
-            array_pair_sum_iterative(self.arr2, 8), self.result2)
+            array_pair_sum_iterative(self.arr2, 8), self.result2) # currently failing
         self.assertEqual(
             array_pair_sum_sort(self.arr2, 8), self.result2)
         self.assertEqual(
