@@ -6,7 +6,28 @@ from os import listdir
 from os.path import isfile, isdir, join, splitext
 
 def main():
-    pass
+    """ Run through all relevant files in the projet and print to console some stats. """
+    nloc_in_project, num_problems, num_questions = 0,0,0
+    search_dir = os.path.dirname(os.getcwd()) # we want the parent directory
+    for folder, subfolders, files in os.walk(search_dir, topdown=False):
+        for f in files:
+            fullpath = os.path.join(folder,f)
+            if (not fullpath.endswith('.py')
+                and not fullpath.endswith('.ipynb')
+                and not fullpath.endswith('.md')): continue # ignore .git hidden folder files and others
+            with open(fullpath, 'r') as f:
+                try:
+                    lines = f.readlines()
+                except UnicodeDecodeError: continue
+                if fullpath.endswith('.py'): nloc_in_project += len(lines)
+                if fullpath.endswith('.py') and '-answer' in fullpath: num_problems += 1
+                if fullpath.endswith('.ipynb'): num_questions += 1
+
+    print("Lines of code in project: ", nloc_in_project)
+    print("Number of Code Exercises: ", num_problems)
+    print("Number of Worded Questions: ", num_questions )
+
+
 
 def line_count_file(file_path, flags=None):
     """ Counts lines for given file in file_name """
