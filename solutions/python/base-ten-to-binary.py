@@ -1,6 +1,6 @@
+# base_ten_to_binary: takes an int, returns the binary representation as a string.
+# author: Matt Box
 def base_ten_to_binary(num):
-    # base_ten_to_binary: takes an int, returns the binary representation as a string.
-    
     # we'll push the digits into this list, least significant first    
     digits = []
     while num:
