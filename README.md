@@ -3,7 +3,7 @@
 ### More python code examples and exercises than you could ever need, all documented and explained for effective and fast learning. Comes with a *GUI Exercise Search and Launcher* out of the box*.
 
 <p align="center">
-  <img src="/images/interview-with-python-hero.png"/>
+  <img src="/housekeeping/images/interview-with-python-hero.png"/>
 </p>
 
 ### Why Use This Repo Over Others?
