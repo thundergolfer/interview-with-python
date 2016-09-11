@@ -43,8 +43,8 @@ class HashTable_One(object):
 
 class HashTable_Two(object):
     """ from http://interactivepython.org/runestone/static/pythonds/SortSearch/Hashing.html """
-    def __init__(self):
-        self.size = 11
+    def __init__(self, size=11):
+        self.size = size
         self.slots = [None] * self.size
         self.data = [None] * self.size
 
@@ -98,3 +98,91 @@ class HashTable_Two(object):
 
     def __setitem__(self,key,data):
         self.put(key,data)
+
+## HASHTABLE THREE ###
+class Node(object):
+    def __init__(self, key, value=None, next=None):
+        self.key = key
+        self.data = value
+        self.next  = next
+
+
+class HashTable_Three(object):
+
+    def __init__(self, size=10):
+        self.size = size
+        self.slots = [None for i in range(self.size)]
+
+    def put(self, key, data):
+        hashVal = self.hash_function(key, self.size)
+
+        if self.slots[hashVal] == None:
+            self.slots[hashVal] = Node(key, data)
+        elif self.slots[hashVal].key == key:
+            self.slots[hashVal].data = data # replace value
+        else:
+            currNode = self.slots[hashVal].next
+            while currNode:
+                if currNode.key == key:
+                    currNode.data = data # replace value
+                    break
+                currNode = currNode.next
+            else: # couldn't find key in table so add it
+                prevNode.next = Node(key, data)
+
+    def get(self, key):
+        search_slot = self.hash_function(key, self.size)
+        if self.slots[search_slot] == None:
+            raise KeyError("'{}' not in table.".format(key))
+        elif self.slots[search_slot].key == key: # check head node
+            return self.slots[search_slot].data
+        else:
+            currNode = self.slots[search_slot].next
+            while currNode:
+                if currNode.key == key:
+                    return currNode.data
+                currNode = currNode.next
+            else: # ran out of nodes
+                raise KeyError("{} not in table.".format(key))
+
+    def __getitem__(self, key):
+        return self.get(key)
+
+    def __setitem__(self, key, data):
+        self.put(key, data)
+
+    def hash_function(self, key, seed=7):
+        h = seed
+        for c in key:
+            h ^= ( ( h << 5) + ord(c) + (h >> 2) )
+        return (h & 0x7fffffff) % self.size
+
+
+
+
+
+class Test_Hashtable(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_hashtable_one(self):
+        pass
+
+    def test_hashtable_three_hashfunction(self):
+        ht = HashTable_Three()
+        num = ht.hash_function('carrot')
+        numtwo = ht.hash_function('carrot')
+        self.assertEqual(num , numtwo )
+
+    def test_hashtable_three(self):
+        ht = HashTable_Three()
+        ht['one'] = 1
+        ht['two'] = 2
+        self.assertEqual( ht['one'], 1 )
+        ht['one'] = 100
+        self.assertEqual( ht['one'], 100)
+
+
+if __name__ == '__main__':
+    unittest.main()
