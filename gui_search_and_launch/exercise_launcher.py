@@ -1,4 +1,6 @@
 import subprocess # for running subprocesses like we are in the command line
+import os
+import sys
 
 def launch_notebook( filepath ):
     """ Launch a python notebook for the user. To make their life easier. """
@@ -13,4 +15,15 @@ def launch_notebook( filepath ):
 ##
 def launch_python_script( filepath ):
     """ Launch an editor for the named python script. """
-    raise NotImplementedError
+
+    import subprocess, os
+    if sys.platform.startswith('darwin'):
+        subprocess.call(('open', filepath))
+    elif os.name == 'nt':
+        os.startfile(filepath)
+    elif os.name == 'posix':
+        subprocess.call(('xdg-open', filepath))
+
+
+if __name__ == '__main__':
+    launch_python_script("hello.py")
