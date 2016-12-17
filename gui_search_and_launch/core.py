@@ -4,6 +4,7 @@
 from __future__ import print_function
 import os
 from argparse import ArgumentParser
+from exercise_launcher import launch_python_script
 
 def main():
 
@@ -14,6 +15,7 @@ def main():
     print("query is: ", query)
 
     file_matches = []
+
     # TODO: Make this code not kinda rubbish
     # Search through all questions in "problems" and "worded_questions"
     for folder, subfolders, files in os.walk(os.getcwd(), topdown=False):
@@ -22,22 +24,44 @@ def main():
             if (('problems' in fullpath or 'worded_questions' in fullpath)
                 and not fullpath.endswith('.md')):  # This will very likely admit TOO MANY files. TODO: fix it
                 with open(fullpath, 'r') as question_file:
-                    lines = question_file.readlines()
+                    try:
+                        lines = question_file.readlines()
+                    except UnicodeDecodeError:
+                        print("Couldn't read: ", fullpath)
+
                     # if at least one tag matches, add the file with its tags to our list
                     matched_tags = match_tags( get_tags_from_file(lines), query)
                     if matched_tags:
-                        file_matches.append( (matched_tags, '...' + fullpath[-60:] ) ) # TODO: fix this hammy way of handling filename
+                        file_matches.append( (matched_tags, fullpath ) ) # TODO: fix this hammy way of handling filename
 
     # order the matched files by number of matched tags. Ascending order
     file_matches = sorted(file_matches, key=lambda x: len(x[0]), reverse=True)
-    print("Look Here: ") # TODO replace this print to console bit with something more useful
+    print("Matched Files: ") # TODO replace this print to console bit with something more useful
     for i, match in enumerate(file_matches):
-        tags, name = match[0], match[1]
+        tags, name = match[0], '...' + match[1][-60:]
         print(str(i), ': ', name)
         print("\tMatches on: " , tags)
 
+    choice = get_menu_choice( len(file_matches) )
+    fp = file_matches[choice][1]
+    launch_python_script(fp)
+
 def match_tags( tags, query_tags ):
     return [tag.lower() for tag in tags if tag.lower() in query_tags]
+
+def get_menu_choice( max_item ):
+    while True:
+        choice = input("Choose a file to open: ")
+        try:
+            choice = int(choice)
+            if choice > 0 and choice <= max_item:
+                break
+            else:
+                print("Invalid input. Please try again.")
+        except ValueError:
+            print("Please enter an integer.")
+
+    return choice
 
 def get_tags_from_file( lines ):
     """
